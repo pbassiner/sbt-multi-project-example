@@ -117,8 +117,7 @@ lazy val assemblySettings = Seq(
   assemblyMergeStrategy in assembly := {
     case PathList("META-INF", xs @ _*) => MergeStrategy.discard
     case _                             => MergeStrategy.first
-  },
-  assemblyOption in assembly := (assemblyOption in assembly).value.copy(includeScala = false)
+  }
 )
 
 lazy val scalafmtSettings =
