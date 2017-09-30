@@ -17,14 +17,14 @@ lazy val common = project
   .settings(
     name := "common",
     settings,
-    libraryDependencies := commonDependencies
+    libraryDependencies ++= commonDependencies
   )
 
 lazy val multi1 = project
   .settings(
     name := "multi1",
     settings,
-    libraryDependencies := commonDependencies ++ Seq(
+    libraryDependencies ++= commonDependencies ++ Seq(
       dependencies.monocleCore,
       dependencies.monocleMacro
     )
@@ -37,7 +37,7 @@ lazy val multi2 = project
   .settings(
     name := "multi2",
     settings,
-    libraryDependencies := commonDependencies ++ Seq(
+    libraryDependencies ++= commonDependencies ++ Seq(
       dependencies.pureconfig
     )
   )
@@ -88,6 +88,7 @@ lazy val commonDependencies = Seq(
 
 lazy val settings =
 commonSettings ++
+wartremoverSettings ++
 assemblySettings ++
 scalafmtSettings
 
@@ -110,6 +111,10 @@ lazy val commonSettings = Seq(
     Resolver.sonatypeRepo("releases"),
     Resolver.sonatypeRepo("snapshots")
   )
+)
+
+lazy val wartremoverSettings = Seq(
+  wartremoverWarnings in (Compile, compile) ++= Warts.allBut(Wart.Throw)
 )
 
 lazy val assemblySettings = Seq(
