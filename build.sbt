@@ -56,10 +56,10 @@ lazy val dependencies =
     val scalaLoggingV   = "3.7.2"
     val slf4jV          = "1.7.25"
     val typesafeConfigV = "1.3.1"
-    val pureconfigV     = "0.7.2"
+    val pureconfigV     = "0.8.0"
     val monocleV        = "1.4.0"
-    val akkaV           = "2.5.3"
-    val scalatestV      = "3.0.3"
+    val akkaV           = "2.5.6"
+    val scalatestV      = "3.0.4"
     val scalacheckV     = "1.13.5"
 
     val logback        = "ch.qos.logback"             % "logback-classic"          % logbackV
