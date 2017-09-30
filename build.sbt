@@ -24,6 +24,7 @@ lazy val multi1 = project
   .settings(
     name := "multi1",
     settings,
+    assemblySettings,
     libraryDependencies ++= commonDependencies ++ Seq(
       dependencies.monocleCore,
       dependencies.monocleMacro
@@ -37,6 +38,7 @@ lazy val multi2 = project
   .settings(
     name := "multi2",
     settings,
+    assemblySettings,
     libraryDependencies ++= commonDependencies ++ Seq(
       dependencies.pureconfig
     )
@@ -89,7 +91,6 @@ lazy val commonDependencies = Seq(
 lazy val settings =
 commonSettings ++
 wartremoverSettings ++
-assemblySettings ++
 scalafmtSettings
 
 lazy val compilerOptions = Seq(
@@ -117,6 +118,13 @@ lazy val wartremoverSettings = Seq(
   wartremoverWarnings in (Compile, compile) ++= Warts.allBut(Wart.Throw)
 )
 
+lazy val scalafmtSettings =
+  Seq(
+    scalafmtOnCompile := true,
+    scalafmtTestOnCompile := true,
+    scalafmtVersion := "1.2.0"
+  )
+
 lazy val assemblySettings = Seq(
   assemblyJarName in assembly := name.value + ".jar",
   assemblyMergeStrategy in assembly := {
@@ -124,10 +132,3 @@ lazy val assemblySettings = Seq(
     case _                             => MergeStrategy.first
   }
 )
-
-lazy val scalafmtSettings =
-  Seq(
-    scalafmtOnCompile := true,
-    scalafmtTestOnCompile := true,
-    scalafmtVersion := "1.2.0"
-  )

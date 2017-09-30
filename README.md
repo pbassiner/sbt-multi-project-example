@@ -2,9 +2,9 @@
 
 The goal of this example is to provide a multi-project build using `sbt` providing:
 * A single `build.sbt` file which allows for centralized configuration, dependency and build management
-* Each sub-project contains only its source code.
+* Each sub-project contains only its source code
 * Sub-projects can depend on other sub-projects
-* A *fat-jar* can be generated for each sub-project using [sbt-assembly](https://github.com/sbt/sbt-assembly)
+* Only *deliverable* sub-projects produce a *fat-jar* using [sbt-assembly](https://github.com/sbt/sbt-assembly)
 
 # Example structure
 * sbt-multi-project-example/
