@@ -7,6 +7,7 @@ scalaVersion in ThisBuild := "2.12.3"
 lazy val global = project
   .in(file("."))
   .settings(settings)
+  .disablePlugins(AssemblyPlugin)
   .aggregate(
     common,
     multi1,
@@ -14,6 +15,7 @@ lazy val global = project
   )
 
 lazy val common = project
+  .disablePlugins(AssemblyPlugin)
   .settings(
     name := "common",
     settings,
@@ -39,6 +41,13 @@ lazy val multi2 = project
     name := "multi2",
     settings,
     assemblySettings,
+    // can customise assembly plugin behaviour:
+    // mainClass in assembly := Some("Main"),
+    // assemblyJarName in assembly := "multi2-custom.jar",
+
+    // ignore scala libraries in fat-jar
+    // assemblyOption in assembly := (assemblyOption in assembly).
+    //  value.copy(includeScala = false, includeDependency = false),
     libraryDependencies ++= commonDependencies ++ Seq(
       dependencies.pureconfig
     )
@@ -129,6 +138,9 @@ lazy val assemblySettings = Seq(
   assemblyJarName in assembly := name.value + ".jar",
   assemblyMergeStrategy in assembly := {
     case PathList("META-INF", xs @ _*) => MergeStrategy.discard
-    case _                             => MergeStrategy.first
+    case "application.conf"            => MergeStrategy.concat
+    case x =>
+      val oldStrategy = (assemblyMergeStrategy in assembly).value
+      oldStrategy(x)
   }
 )
