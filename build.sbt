@@ -7,6 +7,7 @@ scalaVersion in ThisBuild := "2.12.3"
 lazy val global = project
   .in(file("."))
   .settings(settings)
+  .disablePlugins(AssemblyPlugin)
   .aggregate(
     common,
     multi1,
@@ -19,6 +20,7 @@ lazy val common = project
     settings,
     libraryDependencies ++= commonDependencies
   )
+  .disablePlugins(AssemblyPlugin)
 
 lazy val multi1 = project
   .settings(
@@ -129,6 +131,9 @@ lazy val assemblySettings = Seq(
   assemblyJarName in assembly := name.value + ".jar",
   assemblyMergeStrategy in assembly := {
     case PathList("META-INF", xs @ _*) => MergeStrategy.discard
-    case _                             => MergeStrategy.first
+    case "application.conf"            => MergeStrategy.concat
+    case x =>
+      val oldStrategy = (assemblyMergeStrategy in assembly).value
+      oldStrategy(x)
   }
 )
