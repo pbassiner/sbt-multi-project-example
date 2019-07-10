@@ -137,3 +137,5 @@ lazy val assemblySettings = Seq(
       oldStrategy(x)
   }
 )
+
+enablePlugins(TestAffected)
